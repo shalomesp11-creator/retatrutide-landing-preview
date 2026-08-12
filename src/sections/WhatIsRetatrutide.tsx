@@ -12,6 +12,15 @@ export function WhatIsRetatrutide() {
         <div className="what-is__body">
           {content.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           <Badge>{content.note}</Badge>
+          <div className="receptor-map" role="img" aria-label="GLP-1, GIP, and glucagon regulate appetite, blood sugar, and energy expenditure through a combined triple mechanism.">
+            <div className="receptor-map__receptors">
+              {content.receptors.map((receptor) => <span key={receptor}>{receptor}</span>)}
+            </div>
+            <span className="receptor-map__connector" aria-hidden="true">Combined activation</span>
+            <div className="receptor-map__outcomes">
+              {content.outcomes.map((outcome) => <span key={outcome}>{outcome}</span>)}
+            </div>
+          </div>
         </div>
       </Container>
     </section>

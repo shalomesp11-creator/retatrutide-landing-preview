@@ -59,7 +59,7 @@ export function ProductCard({
     <article
       ref={cardRef}
       className={`product-card ${isVisible ? "product-card--visible" : ""} ${isUnavailable ? "product-card--unavailable" : ""}`.trim()}
-      data-availability={isUnavailable ? "unavailable" : "not-specified"}
+      data-availability={isUnavailable ? "unavailable" : "default"}
     >
       <div className="product-card__image">
         <img

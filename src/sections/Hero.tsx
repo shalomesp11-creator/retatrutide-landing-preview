@@ -21,11 +21,11 @@ export function Hero() {
           <p className="hero__body">{hero.body}</p>
           <div className="hero__actions">
             <Button href="#product">{hero.primaryCta}</Button>
-            <Button href="#about" variant="secondary">{hero.secondaryCta}</Button>
+            <Button href="#how-it-works" variant="secondary">{hero.secondaryCta}</Button>
           </div>
-          <div className="hero__marker" aria-hidden="true">
-            <span>01</span>
-            <span>Product overview</span>
+          <div className="hero__marker">
+            <span aria-hidden="true">01</span>
+            <span>{hero.proof}</span>
           </div>
         </div>
         <ProductVisual progress={progress} phase={phase} reducedMotion={reducedMotion} />

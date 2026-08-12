@@ -6,7 +6,7 @@ import { siteContent } from "../content/siteContent";
 export function HowToGet() {
   const content = siteContent.howToGet;
   return (
-    <section className="section how-to-get">
+    <section id="how-to-get" className="section how-to-get">
       <Container>
         <SectionHeading eyebrow={content.eyebrow} title={content.title} />
         <ol className="numbered-steps">

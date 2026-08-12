@@ -40,6 +40,15 @@ export function QualitySection({ onOpenReport }: QualitySectionProps) {
             </li>
           ))}
         </ul>
+        <aside className="storage-panel" aria-labelledby="storage-title">
+          <div>
+            <p className="eyebrow">Storage & safety information</p>
+            <h3 id="storage-title">{content.storageTitle}</h3>
+          </div>
+          <ul>
+            {content.storage.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </aside>
       </Container>
     </section>
   );

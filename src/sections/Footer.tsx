@@ -15,7 +15,7 @@ export function Footer() {
           <div className="site-footer__brand">
             <p className="wordmark">{siteContent.brand}</p>
             <p>{footer.statement}</p>
-            <p className="site-footer__seller">Confirm the seller's identity and direct contact details on the purchasing website before ordering.</p>
+            <p className="site-footer__seller">{footer.sellerNote}</p>
           </div>
           <div className="site-footer__groups">
             {footer.groups.map((group) => (

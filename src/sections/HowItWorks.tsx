@@ -7,13 +7,17 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="section section--muted how-it-works">
       <Container>
-        <SectionHeading eyebrow={content.eyebrow} title={content.title} />
-        <ol className="process-grid">
-          {content.steps.map((step) => (
-            <li className="process-step" key={step.number}>
-              <span>{step.number}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
+        <SectionHeading eyebrow={content.eyebrow} title={content.title} body={content.intro} />
+        <ol className="mechanism-list">
+          {content.receptors.map((receptor) => (
+            <li className="mechanism-card" key={receptor.number}>
+              <div className="mechanism-card__heading">
+                <span aria-hidden="true">{receptor.number}</span>
+                <h3>{receptor.title}</h3>
+              </div>
+              <div className="mechanism-card__copy">
+                {receptor.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
             </li>
           ))}
         </ol>

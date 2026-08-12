@@ -24,8 +24,10 @@ export function MobileStickyCta({ href, label }: MobileStickyCtaProps) {
     return () => observer.disconnect();
   }, []);
 
+  if (heroVisible) return null;
+
   return (
-    <div className={`mobile-sticky-cta${heroVisible ? " mobile-sticky-cta--hidden" : ""}`} aria-hidden={heroVisible}>
+    <div className="mobile-sticky-cta">
       <Button href={href}>{label}</Button>
     </div>
   );

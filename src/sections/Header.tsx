@@ -12,7 +12,7 @@ export function Header() {
             <a href={item.href} key={item.href}>{item.label}</a>
           ))}
         </nav>
-        <Button href="#product" className="site-header__cta">View product</Button>
+        <Button href="#product" className="site-header__cta">Review product</Button>
       </Container>
     </header>
   );

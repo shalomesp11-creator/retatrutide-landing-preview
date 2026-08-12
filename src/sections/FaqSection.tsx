@@ -7,7 +7,7 @@ export function FaqSection() {
   return (
     <section id="faq" className="section faq-section">
       <Container className="faq-section__grid">
-        <SectionHeading eyebrow="FAQ" title="Useful answers, without the noise." />
+        <SectionHeading eyebrow="FAQ" title="Frequently asked questions." />
         <Accordion items={siteContent.faqs} />
       </Container>
     </section>
