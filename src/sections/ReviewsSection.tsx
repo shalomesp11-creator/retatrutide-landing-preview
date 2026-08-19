@@ -58,14 +58,15 @@ export function ReviewsSection() {
       <Container>
         <div className="reviews-section__heading">
           <SectionHeading eyebrow={content.eyebrow} title={content.title} />
+          <div className="reviews-summary">
+            <strong>{content.rating}</strong>
+            <span aria-label="Rated 4.92 out of 5">★★★★★</span>
+            <a href={content.sourceHref} target="_blank" rel="noreferrer">{content.count}</a>
+          </div>
           <div className="reviews-controls" aria-label="Review carousel controls">
-            <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Previous review">
-              <span aria-hidden="true">←</span>
-            </button>
+            <button type="button" onClick={() => goTo(activeIndex - 1)} disabled={activeIndex === 0} aria-label="Previous review">←</button>
             <span aria-live="polite">{activeIndex + 1} / {maxIndex + 1}</span>
-            <button type="button" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === maxIndex} aria-label="Next review">
-              <span aria-hidden="true">→</span>
-            </button>
+            <button type="button" onClick={() => goTo(activeIndex + 1)} disabled={activeIndex === maxIndex} aria-label="Next review">→</button>
           </div>
         </div>
         <div
@@ -86,21 +87,22 @@ export function ReviewsSection() {
         >
           <div className="reviews-track">
             {content.items.map((review, index) => (
-              <article className="review-card" key={`${review.name}-${review.country}`} aria-label={`Review ${index + 1} of ${content.items.length}`}>
+              <article className="review-card" key={`${review.name}-${review.date}-${index}`} aria-label={`Review ${index + 1} of ${content.items.length}`}>
                 <div className="review-card__meta">
-                  <span className="review-card__avatar" aria-hidden="true">{review.initials}</span>
                   <div>
-                    <h3>{review.name}</h3>
-                    <p>
-                      <span className={`review-card__flag review-card__flag--${review.flagCode}`} role="img" aria-label={`Flag of ${review.country}`} />
-                      {review.country}
-                    </p>
+                    <a href={review.href} target="_blank" rel="noreferrer"><h3>{review.name}</h3></a>
+                    <p>{review.date}</p>
                   </div>
+                  <span className="review-card__stars" aria-label={`${review.rating} out of 5 stars`}>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
                 </div>
-                <p className="review-card__body">“{review.body}”</p>
+                <p className="review-card__body">{review.body}</p>
               </article>
             ))}
           </div>
+        </div>
+        <div className="reviews-section__sources">
+          <a href={content.sourceHref} target="_blank" rel="noreferrer">View all 36 reviews</a>
+          <a href={content.secondarySourceHref} target="_blank" rel="noreferrer">DriadaShop reviews</a>
         </div>
       </Container>
     </section>

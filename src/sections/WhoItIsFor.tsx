@@ -24,6 +24,7 @@ export function WhoItIsFor() {
                 key={card.title}
                 onClick={() => setSelectedIndex(index)}
               >
+                <img src={card.image} alt={card.imageAlt} width="480" height="600" loading="lazy" decoding="async" />
                 <span className="benefit-selector__index">0{index + 1}</span>
                 <span className="benefit-selector__title">{card.title}</span>
                 <span className="benefit-selector__state">{isSelected ? "Selected" : "Select"}</span>
@@ -32,6 +33,7 @@ export function WhoItIsFor() {
           })}
         </div>
         <article id="selected-benefit" className="benefit-detail" aria-live="polite">
+          <img src={selectedCard.image} alt="" width="480" height="600" loading="lazy" decoding="async" />
           <span className="benefit-detail__index" aria-hidden="true">0{selectedIndex + 1}</span>
           <div>
             <h3>{selectedCard.title}</h3>

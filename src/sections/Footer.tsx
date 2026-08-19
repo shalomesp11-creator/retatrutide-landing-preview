@@ -1,12 +1,9 @@
 import { Container } from "../components/layout/Container";
+import { Button } from "../components/ui/Button";
 import { siteContent } from "../content/siteContent";
 
 export function Footer() {
   const { footer } = siteContent;
-
-  const handleCookieSettings = () => {
-    window.dispatchEvent(new Event("retatrutide:open-cookie-settings"));
-  };
 
   return (
     <footer className="site-footer">
@@ -16,6 +13,10 @@ export function Footer() {
             <p className="wordmark">{siteContent.brand}</p>
             <p>{footer.statement}</p>
             <p className="site-footer__seller">{footer.sellerNote}</p>
+            <div className="site-footer__actions">
+              <Button href={siteContent.product.consultHref} target="_blank" rel="noreferrer" variant="secondary">Consult an expert</Button>
+              <Button href={siteContent.product.buyHref} target="_blank" rel="noreferrer">Buy now</Button>
+            </div>
           </div>
           <div className="site-footer__groups">
             {footer.groups.map((group) => (
@@ -25,7 +26,8 @@ export function Footer() {
                   <a
                     href={item.href}
                     key={`${group.title}-${item.label}`}
-                    onClick={item.href === "#cookies" ? handleCookieSettings : undefined}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                   >
                     {item.label}
                   </a>
@@ -33,15 +35,6 @@ export function Footer() {
               </nav>
             ))}
           </div>
-        </div>
-
-        <div className="site-footer__legal-copy" aria-label="Legal and service information">
-          {footer.disclosures.map((item) => (
-            <section id={item.id} key={item.id}>
-              <h2>{item.title}</h2>
-              <p>{item.body}</p>
-            </section>
-          ))}
         </div>
 
         <p className="site-footer__disclaimer">{footer.disclaimer}</p>

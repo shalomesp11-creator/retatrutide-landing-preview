@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
 
 type ProductSpec = {
@@ -10,13 +8,13 @@ type ProductSpec = {
 type ProductCardProps = {
   name: string;
   dosage: string;
-  description: string;
-  badges: readonly string[];
   specs: readonly ProductSpec[];
-  cta: string;
-  ctaHref: string;
-  detailCta: string;
-  onOpenDisclosure: () => void;
+  buyCta: string;
+  buyHref: string;
+  consultCta: string;
+  consultHref: string;
+  labCta: string;
+  labHref: string;
   isAvailable?: boolean;
 };
 
@@ -25,40 +23,20 @@ const PACKSHOT = `${import.meta.env.BASE_URL}assets/product/retatrutide/product/
 export function ProductCard({
   name,
   dosage,
-  description,
-  badges,
   specs,
-  cta,
-  ctaHref,
-  detailCta,
-  onOpenDisclosure,
+  buyCta,
+  buyHref,
+  consultCta,
+  consultHref,
+  labCta,
+  labHref,
   isAvailable,
 }: ProductCardProps) {
-  const cardRef = useRef<HTMLElement>(null);
-  const [isVisible, setVisible] = useState(false);
   const isUnavailable = isAvailable === false;
-
-  useEffect(() => {
-    const element = cardRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setVisible(true);
-        observer.disconnect();
-      },
-      { threshold: 0.16 },
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <article
-      ref={cardRef}
-      className={`product-card ${isVisible ? "product-card--visible" : ""} ${isUnavailable ? "product-card--unavailable" : ""}`.trim()}
+      className={`product-card product-card--visible ${isUnavailable ? "product-card--unavailable" : ""}`.trim()}
       data-availability={isUnavailable ? "unavailable" : "default"}
     >
       <div className="product-card__image">
@@ -73,15 +51,14 @@ export function ProductCard({
       </div>
 
       <div className="product-card__content">
-        <div className="product-card__topline" aria-label="Product format">
-          {badges.map((badge) => <Badge tone="accent" key={badge}>{badge}</Badge>)}
-          {isUnavailable && <Badge>Unavailable</Badge>}
+        <div className="product-card__topline" aria-label="Product availability and quality">
+          <span className="product-card__stock"><i aria-hidden="true" />{isUnavailable ? "Unavailable" : "In stock"}</span>
+          <a className="product-card__lab" href={labHref}>{labCta}</a>
         </div>
 
         <p className="product-card__brand">DRADA MEDICAL</p>
         <h3>{name}</h3>
         <p className="product-card__strength">{dosage}</p>
-        <p className="product-card__description">{description}</p>
 
         <dl className="product-card__specs">
           {specs.map((spec) => (
@@ -93,10 +70,9 @@ export function ProductCard({
         </dl>
 
         <div className="product-card__footer">
-          <span>One product · one dosage</span>
           <div className="product-card__actions">
-            <Button type="button" variant="secondary" onClick={onOpenDisclosure}>{detailCta}</Button>
-            <Button href={ctaHref} disabled={isUnavailable}>{cta}</Button>
+            <Button href={consultHref} target="_blank" rel="noreferrer" variant="secondary">{consultCta}</Button>
+            <Button href={buyHref} target="_blank" rel="noreferrer" disabled={isUnavailable}>{buyCta}</Button>
           </div>
         </div>
       </div>

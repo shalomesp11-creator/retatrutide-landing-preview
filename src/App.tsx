@@ -9,9 +9,7 @@ import { Footer } from "./sections/Footer";
 import { Header } from "./sections/Header";
 import { Hero } from "./sections/Hero";
 import { HowItWorks } from "./sections/HowItWorks";
-import { HowToGet } from "./sections/HowToGet";
 import { ProductSection } from "./sections/ProductSection";
-import { PurchaseSection } from "./sections/PurchaseSection";
 import { QualitySection } from "./sections/QualitySection";
 import { ReviewsSection } from "./sections/ReviewsSection";
 import { TrustStrip } from "./sections/TrustStrip";
@@ -19,7 +17,7 @@ import { WhatIsRetatrutide } from "./sections/WhatIsRetatrutide";
 import { WhoItIsFor } from "./sections/WhoItIsFor";
 
 export default function App() {
-  const [activeModal, setActiveModal] = useState<"product" | "lab" | null>(null);
+  const [isLabModalOpen, setLabModalOpen] = useState(false);
 
   return (
     <>
@@ -30,27 +28,18 @@ export default function App() {
         <WhatIsRetatrutide />
         <HowItWorks />
         <WhoItIsFor />
-        <ProductSection onOpenDisclosure={() => setActiveModal("product")} />
-        <HowToGet />
-        <QualitySection onOpenReport={() => setActiveModal("lab")} />
-        <PurchaseSection />
+        <ProductSection />
+        <QualitySection onOpenReport={() => setLabModalOpen(true)} />
         <ReviewsSection />
         <FaqSection />
       </main>
       <Footer />
       <CookieBanner />
-      <MobileStickyCta href="#product" label={siteContent.mobileCta} />
+      <MobileStickyCta href={siteContent.product.buyHref} label={siteContent.mobileCta} />
       <Modal
-        isOpen={activeModal === "product"}
-        title={siteContent.product.disclosureTitle}
-        onClose={() => setActiveModal(null)}
-      >
-        <p>{siteContent.product.disclosureBody}</p>
-      </Modal>
-      <Modal
-        isOpen={activeModal === "lab"}
+        isOpen={isLabModalOpen}
         title={siteContent.quality.report.title}
-        onClose={() => setActiveModal(null)}
+        onClose={() => setLabModalOpen(false)}
         size="document"
       >
         <div className="document-viewer">

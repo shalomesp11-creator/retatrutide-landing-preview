@@ -12,7 +12,25 @@ export function Header() {
             <a href={item.href} key={item.href}>{item.label}</a>
           ))}
         </nav>
-        <Button href="#product" className="site-header__cta">Review product</Button>
+        <div className="site-header__actions">
+          <Button
+            href={siteContent.product.consultHref}
+            target="_blank"
+            rel="noreferrer"
+            variant="secondary"
+            className="site-header__consult"
+          >
+            Consult an expert
+          </Button>
+          <Button
+            href={siteContent.product.buyHref}
+            target="_blank"
+            rel="noreferrer"
+            className="site-header__cta"
+          >
+            Buy
+          </Button>
+        </div>
       </Container>
     </header>
   );
