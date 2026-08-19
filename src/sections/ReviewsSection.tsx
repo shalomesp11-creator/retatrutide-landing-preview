@@ -3,6 +3,12 @@ import { Container } from "../components/layout/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { siteContent } from "../content/siteContent";
 
+function getReviewerInitials(name: string) {
+  const words = name.match(/[A-Za-z]+/g) ?? [];
+  if (words.length > 1) return `${words[0]?.[0] ?? ""}${words[1]?.[0] ?? ""}`.toUpperCase();
+  return (words[0] ?? name).slice(0, 2).toUpperCase();
+}
+
 export function ReviewsSection() {
   const content = siteContent.reviews;
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -89,9 +95,12 @@ export function ReviewsSection() {
             {content.items.map((review, index) => (
               <article className="review-card" key={`${review.name}-${review.date}-${index}`} aria-label={`Review ${index + 1} of ${content.items.length}`}>
                 <div className="review-card__meta">
-                  <div>
-                    <a href={review.href} target="_blank" rel="noreferrer"><h3>{review.name}</h3></a>
-                    <p>{review.date}</p>
+                  <div className="review-card__identity">
+                    <span className="review-card__avatar" aria-hidden="true">{getReviewerInitials(review.name)}</span>
+                    <div>
+                      <a href={review.href} target="_blank" rel="noreferrer"><h3>{review.name}</h3></a>
+                      <p>{review.date}</p>
+                    </div>
                   </div>
                   <span className="review-card__stars" aria-label={`${review.rating} out of 5 stars`}>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</span>
                 </div>
