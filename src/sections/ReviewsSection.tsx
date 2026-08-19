@@ -3,6 +3,12 @@ import { Container } from "../components/layout/Container";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { siteContent } from "../content/siteContent";
 
+function getReviewerInitials(name: string) {
+  const parts = name.match(/[A-Za-z]+/g) ?? [];
+  if (parts.length > 1) return `${parts[0]?.[0] ?? ""}${parts[1]?.[0] ?? ""}`.toUpperCase();
+  return (parts[0] ?? name).slice(0, 2).toUpperCase();
+}
+
 export function ReviewsSection() {
   const content = siteContent.reviews;
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -100,7 +106,11 @@ export function ReviewsSection() {
                         loading="lazy"
                         decoding="async"
                       />
-                    ) : null}
+                    ) : (
+                      <span className="review-card__avatar review-card__avatar--fallback" aria-hidden="true">
+                        {getReviewerInitials(review.name)}
+                      </span>
+                    )}
                     <div>
                       <a href={review.href} target="_blank" rel="noreferrer"><h3>{review.name}</h3></a>
                       <p>{review.date}</p>
