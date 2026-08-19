@@ -1,8 +1,9 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const START_IMAGE = `${import.meta.env.BASE_URL}assets/people/transformation/start.webp`;
 const END_IMAGE = `${import.meta.env.BASE_URL}assets/people/transformation/end.webp`;
@@ -12,6 +13,12 @@ export function TransformationVisual() {
 
   useGSAP(() => {
     const media = gsap.matchMedia();
+    const images = gsap.utils.toArray<HTMLImageElement>(".transformation-visual__image");
+    const refresh = () => ScrollTrigger.refresh();
+
+    images.forEach((image) => {
+      if (!image.complete) image.addEventListener("load", refresh, { once: true });
+    });
 
     media.add("(prefers-reduced-motion: reduce)", () => {
       gsap.set(".transformation-visual__start", { autoAlpha: 0 });
@@ -19,7 +26,7 @@ export function TransformationVisual() {
       gsap.set(".transformation-visual__progress", { scaleX: 1 });
     });
 
-    media.add("(prefers-reduced-motion: no-preference)", () => {
+    media.add("(min-width: 901px) and (prefers-reduced-motion: no-preference)", () => {
       const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
       timeline
         .set(".transformation-visual__start", { autoAlpha: 1, scale: 1 })
@@ -33,7 +40,32 @@ export function TransformationVisual() {
         .to(".transformation-visual__progress", { scaleX: 0, duration: 1.8, ease: "power2.inOut" }, "<");
     });
 
-    return () => media.revert();
+    media.add("(max-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          id: "mobile-body-transformation",
+          trigger: root.current,
+          start: "top 82%",
+          end: "bottom 18%",
+          scrub: 0.2,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      timeline
+        .set(".transformation-visual__start", { autoAlpha: 1, scale: 1.035 })
+        .set(".transformation-visual__end", { autoAlpha: 0, scale: 1.075 })
+        .set(".transformation-visual__progress", { scaleX: 0 })
+        .to(".transformation-visual__progress", { scaleX: 1, duration: 1 }, 0)
+        .to(".transformation-visual__start", { autoAlpha: 0, scale: 0.985, duration: 0.64 }, 0.18)
+        .to(".transformation-visual__end", { autoAlpha: 1, scale: 1, duration: 0.64 }, 0.18);
+    });
+
+    return () => {
+      images.forEach((image) => image.removeEventListener("load", refresh));
+      media.revert();
+    };
   }, { scope: root });
 
   return (

@@ -3968,6 +3968,21 @@ body:has(.cookie-banner) .mobile-sticky-cta {
     border-radius: 22px;
   }
 
+  .transformation-visual__frame {
+    height: clamp(390px, 108vw, 500px);
+    aspect-ratio: auto;
+  }
+
+  .transformation-visual__image {
+    object-position: 50% 48%;
+  }
+
+  .transformation-visual__progress {
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
+  }
+
   .benefit-selector__button {
     min-height: 285px;
     padding-inline: 14px;
