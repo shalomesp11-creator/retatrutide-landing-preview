@@ -35,7 +35,7 @@ export default function App() {
       </main>
       <Footer />
       <CookieBanner />
-      <MobileStickyCta href={siteContent.product.buyHref} label={siteContent.mobileCta} />
+      <MobileStickyCta label={siteContent.mobileCta} />
       <Modal
         isOpen={isLabModalOpen}
         title={siteContent.quality.report.title}

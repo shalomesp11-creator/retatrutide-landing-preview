@@ -1,4 +1,5 @@
 import { Container } from "../components/layout/Container";
+import { ExternalCartForm } from "../components/common/ExternalCartForm";
 import { Button } from "../components/ui/Button";
 import { siteContent } from "../content/siteContent";
 
@@ -22,14 +23,9 @@ export function Header() {
           >
             Consult an expert
           </Button>
-          <Button
-            href={siteContent.product.buyHref}
-            target="_blank"
-            rel="noreferrer"
-            className="site-header__cta"
-          >
+          <ExternalCartForm className="site-header__cta">
             Buy · {siteContent.product.price.current}
-          </Button>
+          </ExternalCartForm>
         </div>
       </Container>
     </header>

@@ -1,4 +1,5 @@
 import { Container } from "../components/layout/Container";
+import { ExternalCartForm } from "../components/common/ExternalCartForm";
 import { Button } from "../components/ui/Button";
 import { siteContent } from "../content/siteContent";
 
@@ -15,14 +16,16 @@ export function Footer() {
             <p className="site-footer__seller">{footer.sellerNote}</p>
             <div className="site-footer__actions">
               <Button href={siteContent.product.consultHref} target="_blank" rel="noreferrer" variant="secondary">Consult an expert</Button>
-              <Button href={siteContent.product.buyHref} target="_blank" rel="noreferrer">Buy now</Button>
+              <ExternalCartForm>Buy now</ExternalCartForm>
             </div>
           </div>
           <div className="site-footer__groups">
             {footer.groups.map((group) => (
               <nav aria-label={group.title} key={group.title}>
                 <h2>{group.title}</h2>
-                {group.links.map((item) => (
+                {group.links.map((item) => item.href === siteContent.product.buyHref ? (
+                  <ExternalCartForm appearance="link" key={`${group.title}-${item.label}`}>{item.label}</ExternalCartForm>
+                ) : (
                   <a
                     href={item.href}
                     key={`${group.title}-${item.label}`}

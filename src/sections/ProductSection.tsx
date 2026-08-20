@@ -1,6 +1,6 @@
 import { Container } from "../components/layout/Container";
+import { ExternalCartForm } from "../components/common/ExternalCartForm";
 import { ProductCard } from "../components/product/ProductCard";
-import { Button } from "../components/ui/Button";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { siteContent } from "../content/siteContent";
 
@@ -29,7 +29,7 @@ export function ProductSection() {
                   <s>{bundle.original}</s>
                 </div>
                 <p className="bundle-card__value"><span>{bundle.unitPrice}</span><span>{bundle.saving}</span></p>
-                <Button href={product.buyHref} target="_blank" rel="noreferrer">{bundle.cta}</Button>
+                <ExternalCartForm>{bundle.cta}</ExternalCartForm>
               </article>
             ))}
           </div>

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button } from "../ui/Button";
+import { ExternalCartForm } from "./ExternalCartForm";
 
 type MobileStickyCtaProps = {
-  href: string;
   label: string;
 };
 
-export function MobileStickyCta({ href, label }: MobileStickyCtaProps) {
+export function MobileStickyCta({ label }: MobileStickyCtaProps) {
   const [heroVisible, setHeroVisible] = useState(true);
   const [footerVisible, setFooterVisible] = useState(false);
 
@@ -41,7 +40,7 @@ export function MobileStickyCta({ href, label }: MobileStickyCtaProps) {
 
   return (
     <div className="mobile-sticky-cta">
-      <Button href={href}>{label}</Button>
+      <ExternalCartForm>{label}</ExternalCartForm>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Container } from "../components/layout/Container";
+import { ExternalCartForm } from "../components/common/ExternalCartForm";
 import { Accordion } from "../components/ui/Accordion";
 import { Button } from "../components/ui/Button";
 import { SectionHeading } from "../components/ui/SectionHeading";
@@ -12,7 +13,7 @@ export function FaqSection() {
         <div className="faq-section__content">
           <Accordion items={siteContent.faqs} />
           <div className="faq-section__actions">
-            <Button href={siteContent.product.buyHref} target="_blank" rel="noreferrer">Buy now</Button>
+            <ExternalCartForm>Buy now</ExternalCartForm>
             <Button href={siteContent.product.consultHref} target="_blank" rel="noreferrer" variant="secondary">Consult an expert</Button>
           </div>
         </div>

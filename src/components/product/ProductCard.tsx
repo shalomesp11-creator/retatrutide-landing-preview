@@ -1,3 +1,4 @@
+import { ExternalCartForm } from "../common/ExternalCartForm";
 import { Button } from "../ui/Button";
 
 type ProductSpec = {
@@ -10,7 +11,6 @@ type ProductCardProps = {
   dosage: string;
   specs: readonly ProductSpec[];
   buyCta: string;
-  buyHref: string;
   consultCta: string;
   consultHref: string;
   labCta: string;
@@ -30,7 +30,6 @@ export function ProductCard({
   dosage,
   specs,
   buyCta,
-  buyHref,
   consultCta,
   consultHref,
   labCta,
@@ -83,7 +82,7 @@ export function ProductCard({
         <div className="product-card__footer">
           <div className="product-card__actions">
             <Button href={consultHref} target="_blank" rel="noreferrer" variant="secondary">{consultCta}</Button>
-            <Button href={buyHref} target="_blank" rel="noreferrer" disabled={isUnavailable}>{buyCta} · {price.current}</Button>
+            <ExternalCartForm disabled={isUnavailable}>{buyCta} · {price.current}</ExternalCartForm>
           </div>
         </div>
       </div>
