@@ -8,6 +8,7 @@ type MobileStickyCtaProps = {
 
 export function MobileStickyCta({ href, label }: MobileStickyCtaProps) {
   const [heroVisible, setHeroVisible] = useState(true);
+  const [footerVisible, setFooterVisible] = useState(false);
 
   useEffect(() => {
     const hero = document.getElementById("top");
@@ -24,7 +25,19 @@ export function MobileStickyCta({ href, label }: MobileStickyCtaProps) {
     return () => observer.disconnect();
   }, []);
 
-  if (heroVisible) return null;
+  useEffect(() => {
+    const footer = document.querySelector(".site-footer");
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.01 },
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
+  if (heroVisible || footerVisible) return null;
 
   return (
     <div className="mobile-sticky-cta">
