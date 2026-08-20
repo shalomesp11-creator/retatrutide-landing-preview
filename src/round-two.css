@@ -132,8 +132,17 @@
 
 .trust-strip__content small {
   color: var(--ink-soft);
-  font-size: 0.61rem;
-  line-height: 1.28;
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.what-is::before {
+  content: none;
+  display: none;
+}
+
+.what-is .section-heading {
+  padding-top: 0;
 }
 
 .what-is.section,
@@ -887,16 +896,8 @@
   }
 
   .trust-strip__content small {
-    font-size: 0.58rem;
-    line-height: 1.25;
-  }
-
-  .what-is::before {
-    display: none;
-  }
-
-  .what-is .section-heading {
-    padding-top: 0;
+    font-size: 0.68rem;
+    line-height: 1.2;
   }
 
   .how-it-works .section-heading {
