@@ -3440,6 +3440,15 @@ body:has(.cookie-banner) .mobile-sticky-cta {
 
 .transformation-visual {
   margin: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.transformation-visual:focus-visible {
+  outline: 3px solid rgba(95, 69, 112, 0.48);
+  outline-offset: 5px;
 }
 
 .transformation-visual__frame {
