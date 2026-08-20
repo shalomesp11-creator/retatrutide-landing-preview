@@ -12,7 +12,9 @@ export function TrustStrip() {
             const content = <><p>{item.title}</p><small>{item.detail}</small></>;
             return (
               <div className="trust-strip__item" key={`${item.title}-${index}`} aria-hidden={index >= siteContent.trustItems.length || undefined}>
-                {"href" in item ? <a href={item.href} target="_blank" rel="noreferrer">{content}</a> : content}
+                {"href" in item
+                  ? <a className="trust-strip__content" href={item.href} target="_blank" rel="noreferrer">{content}</a>
+                  : <div className="trust-strip__content">{content}</div>}
               </div>
             );
           })}
