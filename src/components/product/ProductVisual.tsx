@@ -11,7 +11,15 @@ export type ProductVisualProps = {
   className?: string;
 };
 
-const PRODUCT_IMAGE = `${import.meta.env.BASE_URL}assets/product/retatrutide/hero/drada-retatrutide-hero-premium.webp`;
+const PRODUCT_IMAGE_BASE = `${import.meta.env.BASE_URL}assets/product/retatrutide/hero/drada-retatrutide-hero-premium`;
+const PRODUCT_IMAGE = `${PRODUCT_IMAGE_BASE}-480.webp`;
+const PRODUCT_IMAGE_ORIGINAL = `${PRODUCT_IMAGE_BASE}.webp`;
+const PRODUCT_IMAGE_SRCSET = [
+  `${PRODUCT_IMAGE_BASE}-480.webp 480w`,
+  `${PRODUCT_IMAGE_BASE}-800.webp 800w`,
+  `${PRODUCT_IMAGE_BASE}-1200.webp 1200w`,
+  `${PRODUCT_IMAGE_ORIGINAL} 1600w`,
+].join(", ");
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
 export function ProductVisual({
@@ -43,6 +51,8 @@ export function ProductVisual({
     >
       <figure className="editorial-product">
         <img
+          srcSet={PRODUCT_IMAGE_SRCSET}
+          sizes="(max-width: 600px) 80vw, (max-width: 900px) 48vw, 420px"
           src={PRODUCT_IMAGE}
           alt="DRADA Medical Retatrutide 10 mg package"
           width="1600"

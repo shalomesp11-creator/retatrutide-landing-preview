@@ -1148,3 +1148,37 @@
     object-fit: contain;
   }
 }
+
+/* Keep all audience cards the same width and center the final row on tablets. */
+@media (min-width: 701px) and (max-width: 900px) {
+  .benefit-selector {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .benefit-selector__button {
+    grid-column: auto;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .benefit-selector__button:nth-child(-n + 3) {
+    grid-column: span 2;
+  }
+
+  .benefit-selector__button:nth-child(3) {
+    border-right: 0;
+  }
+
+  .benefit-selector__button:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+
+  .benefit-selector__button:last-child {
+    grid-column: 4 / span 2;
+    border-right: 0;
+  }
+
+  .benefit-selector__button:nth-child(n + 4) {
+    border-bottom: 0;
+  }
+}

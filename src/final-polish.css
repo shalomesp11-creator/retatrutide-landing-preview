@@ -2121,7 +2121,7 @@ body {
   border: 0;
   border-right: 1px solid var(--line);
   padding: 0;
-  background: #ece9e5 url("/assets/documents/retatrutide-lab-report.png") top center / cover no-repeat;
+  background: #ece9e5;
   cursor: zoom-in;
 }
 

@@ -16,7 +16,7 @@ export function QualitySection({ onOpenReport }: QualitySectionProps) {
         <SectionHeading eyebrow={content.eyebrow} title={content.title} body={content.body} />
         <div className="quality-document">
           <button className="quality-document__preview" type="button" onClick={onOpenReport} aria-label={content.report.cta}>
-            <img src={content.report.image} alt="" width="725" height="1107" loading="eager" decoding="async" />
+            <img src={content.report.image} alt="" width="725" height="1107" loading="lazy" decoding="async" fetchPriority="low" />
           </button>
           <div className="quality-document__content">
             <Badge tone="accent">Document available</Badge>
