@@ -8,7 +8,7 @@ export const siteContent = {
     { label: "FAQ", href: "#faq" },
   ],
   hero: {
-    eyebrow: "Lab Tested - 99% putity",
+    eyebrow: "Lab tested · 99% purity",
     title: "Retatrutide",
     lead: "A next-generation peptide developed to support weight loss.",
     body: "It works in three ways to help control appetite, support metabolism, and manage weight more effectively.",
@@ -72,31 +72,31 @@ export const siteContent = {
     cards: [
       {
         title: "Lose weight and control appetite",
-        image: `${import.meta.env.BASE_URL}assets/people/audiences/appetite.jpg`,
+        image: `${import.meta.env.BASE_URL}assets/people/audiences/appetite-wellness-v2.webp`,
         imageAlt: "Woman representing appetite and weight-management goals",
         body: "If you’re looking to lose weight and control your appetite without extreme diets or starvation — Retatrutide reduces appetite and prolongs the feeling of fullness, helping you eat less and comfortably shed excess weight.",
       },
       {
         title: "Insulin resistance, metabolic syndrome, or prediabetes",
-        image: `${import.meta.env.BASE_URL}assets/people/audiences/metabolic.jpg`,
+        image: `${import.meta.env.BASE_URL}assets/people/audiences/metabolic-wellness-v2.webp`,
         imageAlt: "Man representing metabolic health goals",
         body: "If you have insulin resistance, metabolic syndrome, or prediabetes — the drug enhances insulin sensitivity and supports blood sugar regulation.",
       },
       {
         title: "Obesity and related conditions",
-        image: `${import.meta.env.BASE_URL}assets/people/audiences/obesity.jpg`,
+        image: `${import.meta.env.BASE_URL}assets/people/audiences/obesity-wellness-v2.webp`,
         imageAlt: "Woman representing weight and metabolic health goals",
         body: "If you suffer from obesity and related conditions like high blood pressure, fatigue, or inflammation Retatrutide helps reduce the strain on internal organs and improves your metabolic background.",
       },
       {
         title: "Diagnosed type 2 diabetes",
-        image: `${import.meta.env.BASE_URL}assets/people/audiences/diabetes.jpg`,
+        image: `${import.meta.env.BASE_URL}assets/people/audiences/diabetes-wellness-v2.webp`,
         imageAlt: "Man representing type 2 diabetes support goals",
         body: "If you’ve been diagnosed with type 2 diabetes — it can help better manage blood glucose, reduce food cravings, and serve as an additional therapeutic tool.",
       },
       {
         title: "Prevent fatty liver disease",
-        image: `${import.meta.env.BASE_URL}assets/people/audiences/liver.jpg`,
+        image: `${import.meta.env.BASE_URL}assets/people/audiences/liver-wellness-v2.webp`,
         imageAlt: "Woman representing liver health goals",
         body: "If you aim to prevent fatty liver disease — Retatrutide may lower liver fat levels and reduce systemic inflammation.",
       },
@@ -107,6 +107,11 @@ export const siteContent = {
     title: "One product. A better life.",
     name: "Retatrutide",
     dosage: "10 mg / vial",
+    price: {
+      current: "€61.30",
+      original: "€73.80",
+      saving: "Save €12.50 · 17%",
+    },
     specs: [
       { label: "Composition", value: "Retatrutide 10 mg" },
       { label: "Category", value: "Peptide" },
@@ -120,6 +125,11 @@ export const siteContent = {
     consultHref: "https://driadashop.helpline.to/en-US/new-ticket",
     labCta: "Lab test / 99% purity",
     labHref: "#quality",
+    bundles: [
+      { name: "Starter", units: "1 unit", total: "€61.30", original: "€73.80", unitPrice: "€61.30 / unit", saving: "Save €12.50", cta: "Choose 1 unit" },
+      { name: "Performance", units: "3 units · buy 3 & save", total: "€166.80", original: "€221.40", unitPrice: "€55.60 / unit", saving: "Save €54.60", cta: "Choose 3 units", popular: true },
+      { name: "Pro cycle", units: "5 units · best value", total: "€251.25", original: "€369.00", unitPrice: "€50.25 / unit", saving: "Save €117.75", cta: "Choose 5 units" },
+    ],
   },
   quality: {
     eyebrow: "Quality & authenticity",
@@ -210,7 +220,7 @@ export const siteContent = {
     ],
     disclaimer: "Early studies show Retatrutide is generally safe, but long-term data is limited. A doctor’s prescription is required.",
   },
-  mobileCta: "Buy now",
+  mobileCta: "Buy · €61.30",
 } as const;
 
 export type SiteContent = typeof siteContent;

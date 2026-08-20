@@ -15,6 +15,11 @@ type ProductCardProps = {
   consultHref: string;
   labCta: string;
   labHref: string;
+  price: {
+    current: string;
+    original: string;
+    saving: string;
+  };
   isAvailable?: boolean;
 };
 
@@ -30,6 +35,7 @@ export function ProductCard({
   consultHref,
   labCta,
   labHref,
+  price,
   isAvailable,
 }: ProductCardProps) {
   const isUnavailable = isAvailable === false;
@@ -59,6 +65,11 @@ export function ProductCard({
         <p className="product-card__brand">DRADA MEDICAL</p>
         <h3>{name}</h3>
         <p className="product-card__strength">{dosage}</p>
+        <div className="product-card__price" aria-label={`Current price ${price.current}; previous price ${price.original}; ${price.saving}`}>
+          <strong>{price.current}</strong>
+          <s>{price.original}</s>
+          <span>{price.saving}</span>
+        </div>
 
         <dl className="product-card__specs">
           {specs.map((spec) => (
@@ -72,7 +83,7 @@ export function ProductCard({
         <div className="product-card__footer">
           <div className="product-card__actions">
             <Button href={consultHref} target="_blank" rel="noreferrer" variant="secondary">{consultCta}</Button>
-            <Button href={buyHref} target="_blank" rel="noreferrer" disabled={isUnavailable}>{buyCta}</Button>
+            <Button href={buyHref} target="_blank" rel="noreferrer" disabled={isUnavailable}>{buyCta} · {price.current}</Button>
           </div>
         </div>
       </div>

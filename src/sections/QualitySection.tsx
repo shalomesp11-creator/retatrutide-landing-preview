@@ -17,7 +17,6 @@ export function QualitySection({ onOpenReport }: QualitySectionProps) {
         <div className="quality-document">
           <button className="quality-document__preview" type="button" onClick={onOpenReport} aria-label={content.report.cta}>
             <img src={content.report.image} alt="" width="725" height="1107" loading="eager" decoding="async" />
-            <span>{content.report.cta}</span>
           </button>
           <div className="quality-document__content">
             <Badge tone="accent">Document available</Badge>

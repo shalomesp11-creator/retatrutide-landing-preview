@@ -17,13 +17,19 @@ export function WhatIsRetatrutide() {
         <div className="what-is__visual-row">
           <TransformationVisual />
           <div className="receptor-map" role="img" aria-label="GLP-1, GIP, and glucagon regulate appetite, blood sugar, and energy expenditure through a combined triple mechanism.">
+            <p className="receptor-map__eyebrow">One molecule · three signals</p>
             <div className="receptor-map__receptors">
               {content.receptors.map((receptor) => <span key={receptor}>{receptor}</span>)}
             </div>
-            <span className="receptor-map__connector" aria-hidden="true">Combined activation</span>
-            <div className="receptor-map__outcomes">
-              {content.outcomes.map((outcome) => <span key={outcome}>{outcome}</span>)}
+            <div className="receptor-map__hub" aria-hidden="true">
+              <span>Combined activation</span>
+              <strong>Triple-action signal</strong>
+              <i>↓</i>
             </div>
+            <div className="receptor-map__outcomes">
+              {content.outcomes.map((outcome, index) => <span key={outcome}><small>0{index + 1}</small>{outcome}</span>)}
+            </div>
+            <p className="receptor-map__note">Three metabolic pathways working as one coordinated system.</p>
           </div>
         </div>
       </Container>

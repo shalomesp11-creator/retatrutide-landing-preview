@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 const START_IMAGE = `${import.meta.env.BASE_URL}assets/people/transformation/start.webp`;
 const END_IMAGE = `${import.meta.env.BASE_URL}assets/people/transformation/end.webp`;
@@ -12,90 +11,84 @@ export function TransformationVisual() {
   const root = useRef<HTMLElement>(null);
 
   useGSAP((_context, contextSafe) => {
-    const media = gsap.matchMedia();
-    const images = gsap.utils.toArray<HTMLImageElement>(".transformation-visual__image");
-    const refresh = () => ScrollTrigger.refresh();
+    const element = root.current;
+    if (!element) return;
 
-    images.forEach((image) => {
-      if (!image.complete) image.addEventListener("load", refresh, { once: true });
-    });
+    const startImage = element.querySelector<HTMLElement>(".transformation-visual__start");
+    const endImage = element.querySelector<HTMLElement>(".transformation-visual__end");
+    const progressBar = element.querySelector<HTMLElement>(".transformation-visual__progress");
+    if (!startImage || !endImage || !progressBar) return;
+
+    const media = gsap.matchMedia();
 
     media.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.set(".transformation-visual__start", { autoAlpha: 0 });
-      gsap.set(".transformation-visual__end", { autoAlpha: 1 });
-      gsap.set(".transformation-visual__progress", { scaleX: 1 });
+      gsap.set(startImage, { autoAlpha: 0, scale: 1 });
+      gsap.set(endImage, { autoAlpha: 1, scale: 1 });
+      gsap.set(progressBar, { scaleX: 1 });
     });
 
     media.add("(prefers-reduced-motion: no-preference)", () => {
-      const element = root.current;
-      if (!element) return;
-
       const playhead = { progress: 0 };
       let autoDirection = 1;
+      let motionTween: gsap.core.Tween | null = null;
       let resumeCall: gsap.core.Tween | null = null;
+      let isVisible = true;
       let destroyed = false;
 
       const visualTimeline = gsap.timeline({ paused: true, defaults: { ease: "power2.inOut" } });
       visualTimeline
-        .set(".transformation-visual__start", { autoAlpha: 1, scale: 1.075 })
-        .set(".transformation-visual__end", { autoAlpha: 0, scale: 1.085 })
-        .set(".transformation-visual__progress", { scaleX: 0 })
-        .to(".transformation-visual__progress", { scaleX: 1, duration: 1, ease: "none" }, 0)
-        .to(".transformation-visual__start", { autoAlpha: 0, scale: 0.985, duration: 1 }, 0)
-        .to(".transformation-visual__end", { autoAlpha: 1, scale: 1, duration: 1 }, 0);
+        .set(startImage, { autoAlpha: 1, scale: 1.012 })
+        .set(endImage, { autoAlpha: 0, scale: 1.012 })
+        .set(progressBar, { scaleX: 0 })
+        .to(progressBar, { scaleX: 1, duration: 1, ease: "none" }, 0)
+        .to(startImage, { autoAlpha: 0, scale: 1, duration: 1 }, 0)
+        .to(endImage, { autoAlpha: 1, scale: 1, duration: 1 }, 0);
 
       const render = () => {
-        visualTimeline.progress(gsap.utils.clamp(0, 1, playhead.progress));
-        element.dataset.transformationProgress = playhead.progress.toFixed(3);
+        const value = gsap.utils.clamp(0, 1, playhead.progress);
+        visualTimeline.progress(value);
+        element.dataset.transformationProgress = value.toFixed(3);
       };
 
       const cancelPendingMotion = () => {
-        gsap.killTweensOf(playhead);
+        motionTween?.kill();
         resumeCall?.kill();
+        motionTween = null;
         resumeCall = null;
       };
 
       const runAuto = () => {
-        if (destroyed) return;
+        if (destroyed || !isVisible) return;
         cancelPendingMotion();
-
         const target = autoDirection > 0 ? 1 : 0;
         const distance = Math.abs(target - playhead.progress);
-        gsap.to(playhead, {
+        motionTween = gsap.to(playhead, {
           progress: target,
-          duration: Math.max(0.35, distance * 2),
+          duration: Math.max(0.55, distance * 2.4),
           ease: "power2.inOut",
           overwrite: true,
           onUpdate: render,
           onComplete: () => {
             autoDirection *= -1;
-            resumeCall = gsap.delayedCall(0.18, runAuto);
+            resumeCall = gsap.delayedCall(1.05, runAuto);
           },
         });
       };
 
-      const resumeAutoAfter = (delay: number) => {
-        resumeCall?.kill();
-        resumeCall = gsap.delayedCall(delay, runAuto);
-      };
-
-      const animateFromInput = (target: number, duration: number, resumeDelay: number) => {
+      const toggle = contextSafe?.(() => {
         cancelPendingMotion();
-        autoDirection = target >= 0.5 ? -1 : 1;
-        gsap.to(playhead, {
+        const target = playhead.progress < 0.5 ? 1 : 0;
+        autoDirection = target === 1 ? -1 : 1;
+        motionTween = gsap.to(playhead, {
           progress: target,
-          duration,
+          duration: 0.9,
           ease: "power2.inOut",
           overwrite: true,
           onUpdate: render,
-          onComplete: () => resumeAutoAfter(resumeDelay),
+          onComplete: () => {
+            resumeCall = gsap.delayedCall(1.25, runAuto);
+          },
         });
-      };
-
-      const toggle = contextSafe?.(() => {
-        const target = playhead.progress < 0.5 ? 1 : 0;
-        const distance = Math.abs(target - playhead.progress);
-        animateFromInput(target, Math.max(0.35, distance * 1.4), 0.45);
       });
 
       const onKeyDown = contextSafe?.((event: KeyboardEvent) => {
@@ -104,33 +97,22 @@ export function TransformationVisual() {
         toggle?.();
       });
 
-      let lastScrollProgress = -1;
-      const scrollTrigger = ScrollTrigger.create({
-        id: "body-transformation",
-        trigger: element,
-        start: "top 82%",
-        end: "bottom 18%",
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (Math.abs(self.progress - lastScrollProgress) < 0.001) return;
-          lastScrollProgress = self.progress;
-          cancelPendingMotion();
-          playhead.progress = self.progress;
-          autoDirection = self.progress >= 0.5 ? -1 : 1;
-          render();
-          resumeAutoAfter(0.75);
-        },
-      });
+      const observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) runAuto();
+        else cancelPendingMotion();
+      }, { threshold: 0.08 });
 
       element.addEventListener("click", toggle as EventListener);
       element.addEventListener("keydown", onKeyDown as EventListener);
+      observer.observe(element);
       render();
       runAuto();
 
       return () => {
         destroyed = true;
         cancelPendingMotion();
-        scrollTrigger.kill();
+        observer.disconnect();
         visualTimeline.kill();
         element.removeEventListener("click", toggle as EventListener);
         element.removeEventListener("keydown", onKeyDown as EventListener);
@@ -138,17 +120,14 @@ export function TransformationVisual() {
       };
     });
 
-    return () => {
-      images.forEach((image) => image.removeEventListener("load", refresh));
-      media.revert();
-    };
+    return () => media.revert();
   }, { scope: root });
 
   return (
     <figure
       ref={root}
       className="transformation-visual"
-      aria-label="Illustrative body-composition transformation"
+      aria-label="Illustrative full-body composition change. Activate to switch between both states."
       role="button"
       tabIndex={0}
     >
@@ -173,6 +152,7 @@ export function TransformationVisual() {
           fetchPriority="high"
           decoding="async"
         />
+        <span className="transformation-visual__hint" aria-hidden="true">Tap to compare</span>
         <div className="transformation-visual__progress" aria-hidden="true" />
       </div>
     </figure>

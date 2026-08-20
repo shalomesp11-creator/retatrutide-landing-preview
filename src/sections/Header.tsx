@@ -28,7 +28,7 @@ export function Header() {
             rel="noreferrer"
             className="site-header__cta"
           >
-            Buy
+            Buy · {siteContent.product.price.current}
           </Button>
         </div>
       </Container>
