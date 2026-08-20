@@ -275,7 +275,8 @@
   width: calc(100% + 30px);
   height: 110px;
   margin: 0 -15px 13px;
-  object-position: center;
+  object-position: center 8%;
+  transform-origin: center 20%;
   filter: saturate(0.96) contrast(1.01);
 }
 
@@ -304,7 +305,7 @@
 
 .benefit-detail > img {
   min-height: 210px;
-  object-position: center;
+  object-position: center 8%;
   filter: saturate(1);
 }
 
@@ -1038,7 +1039,7 @@
     grid-column: auto;
     aspect-ratio: 5 / 2;
     object-fit: cover;
-    object-position: center 32%;
+    object-position: center 8%;
   }
 
   .benefit-detail__index {
