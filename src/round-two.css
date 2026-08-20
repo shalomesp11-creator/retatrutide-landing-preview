@@ -4,6 +4,10 @@
   display: none;
 }
 
+.mobile-sticky-cta .button__icon {
+  display: none;
+}
+
 .site-header__cta {
   white-space: nowrap;
 }
